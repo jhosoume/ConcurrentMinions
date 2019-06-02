@@ -1,5 +1,5 @@
 CC       := g++
-CFLAGS   := -std=c++11 --pedantic -lpthread
+CFLAGS   := -std=c++11 --pedantic
 
 SRCDIR   := src
 BUILDDIR := build
@@ -10,7 +10,7 @@ TARGET	 := $(BINDIR)/game_theory
 SRCEXT   := cpp
 SOURCES  := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS  := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-LIB      := -lm
+LIB      := -lm -lpthread
 INC      := -I include
 
 

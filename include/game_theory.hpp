@@ -4,9 +4,16 @@
 #include <unistd.h>
 #include <pthread.h>
 #include <semaphore.h>
+#include <iostream>
 
 #include "Minion.hpp"
 #include "Strategies.hpp"
+#include "Generations.hpp"
+#include "helper.hpp"
+#include "parameters.hpp"
+
+using ::std::cout;
+using ::std::endl;
 
 #define RED     "\x1b[31m"
 #define GREEN   "\x1b[32m"
