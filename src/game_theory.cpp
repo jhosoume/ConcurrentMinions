@@ -24,6 +24,7 @@ void *fgru(void *identifier) {
 
     pthread_mutex_lock(&lock_minions);
     to_recruit = limited_rand(min_minions, max_minions);
+    to_recruit = 8;
     cout << "!!! Gru is recruiting " << to_recruit << " minions!" << endl;
     gru_recruiting = true;
     pthread_mutex_unlock(&lock_minions);
@@ -75,7 +76,10 @@ void *fminion(void *identifier) {
     while (minions[id].occupied ||
            minions[partner].occupied ||
            (gru_recruiting && (to_recruit > 0))) {
-      if (gru_recruiting && (to_recruit > 0)) {
+      if (minions[id].occupied) {
+        cout << "Minion " << id << " is already occupied." << endl;
+        pthread_cond_wait(&minions[id].mcond, &lock_minions);
+      } else if (gru_recruiting && (to_recruit > 0)) {
         minions[id].occupied = true;
         --to_recruit;
         minions_recruited.push_back(id);
@@ -84,9 +88,6 @@ void *fminion(void *identifier) {
           cout << "!!! Minion " << id << " REC FIN!" << endl;
           sem_post(&gru_recruited);
         }
-        pthread_cond_wait(&minions[id].mcond, &lock_minions);
-      } else if (minions[id].occupied) {
-        cout << "Minion " << id << " is already in an interaction." << endl;
         pthread_cond_wait(&minions[id].mcond, &lock_minions);
       } else if (minions[partner].occupied) {
         cout << "Minion " << id << " is waiting partner " << partner << "." << endl;
