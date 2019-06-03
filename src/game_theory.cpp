@@ -8,6 +8,10 @@ pthread_mutex_t lock_interactions = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t gru_cond = PTHREAD_COND_INITIALIZER;
 bool gru_recruiting = false;
 
+void *fgru(void *identifier) {
+  pthread_exit(0);
+}
+
 
 void *fminion(void *identifier) {
   int id = *((int *) identifier);
@@ -19,11 +23,11 @@ void *fminion(void *identifier) {
     // << minions[id].strategy.name << endl;
   sleep(limited_rand(0, 3));
   while (1) {
+    partner = limited_rand(0, NUM_MINIONS - 1);
     while (partner == id) {
       partner = limited_rand(0, NUM_MINIONS - 1);
     }
     pthread_mutex_lock(&lock_minions);
-    cout << "Num interactions 1 = " << interactions << endl;
     if (interactions >= NUM_INTERACTIONS) {
       pthread_mutex_unlock(&lock_minions);
       break;
@@ -42,7 +46,7 @@ void *fminion(void *identifier) {
     minions[partner].occupied = true;
     sleep_time = minions[id].strategy.interaction_duration;
     cout << "Minion " << id << " is interacting with " << partner << endl;
-    cout << "Num interactions 2 = " << interactions << endl;
+    cout << "Num interactions = " << interactions << endl;
     pthread_mutex_unlock(&lock_minions);
 
     sleep(sleep_time);
@@ -55,7 +59,7 @@ void *fminion(void *identifier) {
     cout << "Minion " << id << " is done with " << partner << endl;
     pthread_mutex_unlock(&lock_minions);
     // cout << "Interactions = " << interactions << endl;
-    // sleep(5);
+    sleep(5);
 
   }
   cout << "DONE!" << endl;
@@ -67,6 +71,7 @@ int main() {
   srand(time(NULL));
 
   pthread_t minions_threads[NUM_MINIONS];
+  pthread_t gru;
   int *id;
 
   Strategies strats = Strategies();
@@ -78,10 +83,13 @@ int main() {
     *id = min_indx;
     pthread_create(&minions_threads[min_indx], NULL, fminion, (void *) (id));
   }
-
+  id = (int *) malloc(sizeof(int));
+  *id = 0;
+  pthread_create(&gru, NULL, fgru, (void *) (id));
   for (int min_indx = 0; min_indx < NUM_MINIONS; ++min_indx) {
     pthread_join(minions_threads[min_indx], NULL);
   }
+  pthread_join(gru, NULL);
 
   return 0;
 }

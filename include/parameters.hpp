@@ -7,6 +7,7 @@
 #define NUM_S_A 5
 #define NUM_S_B 5
 #define NUM_INTERACTIONS 50
+#define GRU_WAIT  8
 
 extern Minion minions[NUM_MINIONS];
 extern bool calculating;
