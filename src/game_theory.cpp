@@ -7,8 +7,21 @@ pthread_mutex_t lock_minions = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t lock_interactions = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t gru_cond = PTHREAD_COND_INITIALIZER;
 bool gru_recruiting = false;
+int to_recruit = 0;
+sem_t gru_generation;
+sem_t gru_recruited;
 
 void *fgru(void *identifier) {
+  int id = *((int *) identifier);
+  free((int *)identifier);
+  int min_minions = NUM_MINIONS/5;
+  int max_minions = NUM_MINIONS/2;
+
+  while(1) {
+    sleep(GRU_WAIT);
+    to_recruit = limited_rand(min_minions, max_minions);
+  }
+
   pthread_exit(0);
 }
 
@@ -73,6 +86,8 @@ int main() {
   pthread_t minions_threads[NUM_MINIONS];
   pthread_t gru;
   int *id;
+  sem_init(&gru_generation, 0, 0);
+  sem_init(&gru_recruited, 0, 0);
 
   Strategies strats = Strategies();
   Generations generation = Generations(NUM_INTERACTIONS);
