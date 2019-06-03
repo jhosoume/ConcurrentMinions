@@ -8,10 +8,12 @@
 
 class Minion {
 public:
+  Minion();
+  Minion(int, Strategy);
   int id;
-  pthread_cond_t minion_cond = PTHREAD_COND_INITIALIZER;
+  pthread_cond_t mcond = PTHREAD_COND_INITIALIZER;
   bool occupied = false;
-  Strategy strat = Strategy();
+  Strategy strategy = Strategy();
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include <iostream>
 #include "parameters.hpp"
 #include "Strategies.hpp"
+#include "Minion.hpp"
 
 using ::std::vector;
 using ::std::cout;
