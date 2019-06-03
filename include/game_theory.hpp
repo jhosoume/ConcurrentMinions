@@ -5,6 +5,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <iostream>
+#include <list>
 
 #include "Minion.hpp"
 #include "Strategies.hpp"
@@ -12,6 +13,7 @@
 #include "helper.hpp"
 #include "parameters.hpp"
 
+using ::std::list;
 using ::std::cout;
 using ::std::endl;
 
