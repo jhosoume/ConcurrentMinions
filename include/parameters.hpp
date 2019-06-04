@@ -8,12 +8,12 @@
 
 #include "Minion.hpp"
 
-#define NUM_MINIONS 10
-#define NUM_S_A 5
-#define NUM_S_B 5
-#define NUM_INTERACTIONS 25
+#define NUM_MINIONS 50
+#define NUM_S_A 25
+#define NUM_S_B 25
+#define NUM_INTERACTIONS 50
 #define GRU_WAIT 8
-#define NUM_GEN 2
+#define NUM_GEN 4
 
 extern Minion minions[NUM_MINIONS];
 extern bool calculating;
