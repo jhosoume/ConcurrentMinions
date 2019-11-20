@@ -1,0 +1,11 @@
+Juliana Mayumi Hosoume
+18/0048864
+
+Para modificar os parâmetros do programa:
+	Alterar o arquivo src/parameters.cpp
+
+Para compilar o programa, no diretório raiz:
+>> make
+
+Para executar:
+>>./bin/game_theory

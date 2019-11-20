@@ -63,7 +63,7 @@ void *fgru(void *identifier) {
     sleep(limited_rand(5, 7));
 
     pthread_mutex_lock(&lock_minions);
-    cout << "!!! Relesing Minions!" << endl;
+    cout << "!!! Releasing Minions!" << endl;
     for (auto minion_indx : minions_recruited) {
     cout << "!!! Released Minion : " << minion_indx << endl;
       minions[minion_indx].occupied = false;
